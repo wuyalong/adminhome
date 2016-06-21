@@ -12,61 +12,11 @@
 </head>
 <body>
 <div id="dcWrap">
- <div id="dcHead">
- <div id="head">
-  <div class="logo"><a href="index.html"><img src="images/dclogo.gif" alt="logo"></a></div>
-  <div class="nav">
-   <ul>
-    <li class="M"><a href="JavaScript:void(0);" class="topAdd">新建</a>
-     <div class="drop mTopad"><a href="product.php?rec=add">商品</a> <a href="article.php?rec=add">文章</a> <a href="nav.php?rec=add">自定义导航</a> <a href="show.html">首页幻灯</a> <a href="page.php?rec=add">单页面</a> <a href="manager.php?rec=add">管理员</a> <a href="link.html"></a> </div>
-    </li>
-    <li><a href="../index.php" target="_blank">查看站点</a></li>
-    <li><a href="index.php?rec=clear_cache">清除缓存</a></li>
-    <li><a href="http://help.douco.com" target="_blank">帮助</a></li>
-    <li class="noRight"><a href="module.html">DouPHP+</a></li>
-   </ul>
-   <ul class="navRight">
-    <li class="M noLeft"><a href="JavaScript:void(0);">您好，admin</a>
-     <div class="drop mUser">
-      <a href="manager.php?rec=edit&id=1">编辑我的个人资料</a>
-      <a href="manager.php?rec=cloud_account">设置云账户</a>
-     </div>
-    </li>
-    <li class="noRight"><a href="login.php?rec=logout">退出</a></li>
-   </ul>
-  </div>
- </div>
-</div>
-<!-- dcHead 结束 --> <div id="dcLeft"><div id="menu">
- <ul class="top">
-  <li><a href="index.html"><i class="home"></i><em>管理首页</em></a></li>
- </ul>
- <ul>
-  <li><a href="system.html"><i class="system"></i><em>系统设置</em></a></li>
-  <li><a href="nav.html"><i class="nav"></i><em>自定义导航栏</em></a></li>
-  <li><a href="show.html"><i class="show"></i><em>首页幻灯广告</em></a></li>
-  <li><a href="page.html"><i class="page"></i><em>单页面管理</em></a></li>
- </ul>
-   <ul>
-  <li><a href="product_category.html"><i class="productCat"></i><em>商品分类</em></a></li>
-  <li class="cur"><a href="product.html"><i class="product"></i><em>商品列表</em></a></li>
- </ul>
-  <ul>
-  <li><a href="article_category.html"><i class="articleCat"></i><em>文章分类</em></a></li>
-  <li><a href="article.html"><i class="article"></i><em>文章列表</em></a></li>
- </ul>
-   <ul class="bot">
-  <li><a href="backup.html"><i class="backup"></i><em>数据备份</em></a></li>
-  <li><a href="mobile.html"><i class="mobile"></i><em>手机版</em></a></li>
-  <li><a href="theme.html"><i class="theme"></i><em>设置模板</em></a></li>
-  <li><a href="manager.html"><i class="manager"></i><em>网站管理员</em></a></li>
-  <li><a href="manager.php?rec=manager_log"><i class="managerLog"></i><em>操作记录</em></a></li>
- </ul>
-</div></div>
+    @include('public/common');
  <div id="dcMain">
    <!-- 当前位置 -->
 <div id="urHere">DouPHP 管理中心<b>></b><strong>商品列表</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-        <h3><a href="addproduct.html?rec=add" class="actionBtn add">添加商品</a>商品列表</h3>
+        <h3><a href="addproduct" class="actionBtn add">添加商品</a>商品列表</h3>
     <div class="filter">
     <form action="product.php" method="post">
      <select name="cat_id">
@@ -93,159 +43,28 @@
         <th width="40" align="center">编号</th>
         <th align="left">商品名称</th>
         <th width="150" align="center">商品分类</th>
+        <th width="150" align="center">商品图片</th>
        <th width="80" align="center">添加日期</th>
         <th width="80" align="center">操作</th>
       </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="15" /></td>
-        <td align="center">15</td>
-        <td><a href="product.php?rec=edit&id=15">亨氏Heinz金装粒粒面鳕鱼胡萝卜面</a></td>
-        <td align="center"><a href="product.php?cat_id=3">母婴用品</a></td>
-        <td align="center">2013-06-26</td>
+        {{--开始--}}
+        @foreach($arr as $v)
+        <tr>
+        <td align="center"><input type="checkbox" name="checkbox[]" value="{{$v->goods_id}}" /></td>
+        <td align="center">{{$v->goods_id}}</td>
+        <td style="width:200px"><a href="#">{{$v->goods_name}}</a></td>
+        <td style="width:100px" align="center"><a href="product.php?cat_id=3">{{$v->sort_name}}</a></td>
+        <td style="width:150px" align="center"><img src="../../../frontend/web/public/images/{{$v->goods_img}}" alt="该图片在前台yii框架中" width="100px"/></td>
+        <td align="center">{{date("Y-m-d H:i:s", $v->add_time)}}</td>
         <td align="center">
-                  <a href="product.php?rec=edit&id=15">编辑</a> | <a href="product.php?rec=del&id=15">删除</a>
+                  {{--<a href="product.php?rec=edit&id=15">编辑</a> | --}}
+            <a href="goodsdel?goods_id={{$v->goods_id}}">删除</a>&nbsp;||&nbsp;<a href="gaddsku?goods_id={{$v->goods_id}}">添加Sku</a>&nbsp;||&nbsp;<a
+                    href="addactive">添加活动</a>
                  </td>
       </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="14" /></td>
-        <td align="center">14</td>
-        <td><a href="product.php?rec=edit&id=14">PES宽口套装奶瓶</a></td>
-        <td align="center"><a href="product.php?cat_id=3">母婴用品</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=14">编辑</a> | <a href="product.php?rec=del&id=14">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="13" /></td>
-        <td align="center">13</td>
-        <td><a href="product.php?rec=edit&id=13">法国合生元奶粉</a></td>
-        <td align="center"><a href="product.php?cat_id=3">母婴用品</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=13">编辑</a> | <a href="product.php?rec=del&id=13">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="12" /></td>
-        <td align="center">12</td>
-        <td><a href="product.php?rec=edit&id=12">Pampers帮宝适超薄干爽纸尿裤</a></td>
-        <td align="center"><a href="product.php?cat_id=3">母婴用品</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=12">编辑</a> | <a href="product.php?rec=del&id=12">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="11" /></td>
-        <td align="center">11</td>
-        <td><a href="product.php?rec=edit&id=11">客厅吸顶灯</a></td>
-        <td align="center"><a href="product.php?cat_id=2">家居百货</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=11">编辑</a> | <a href="product.php?rec=del&id=11">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="10" /></td>
-        <td align="center">10</td>
-        <td><a href="product.php?rec=edit&id=10">实木餐桌</a></td>
-        <td align="center"><a href="product.php?cat_id=2">家居百货</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=10">编辑</a> | <a href="product.php?rec=del&id=10">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="9" /></td>
-        <td align="center">9</td>
-        <td><a href="product.php?rec=edit&id=9">衣物收纳箱</a></td>
-        <td align="center"><a href="product.php?cat_id=2">家居百货</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=9">编辑</a> | <a href="product.php?rec=del&id=9">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="8" /></td>
-        <td align="center">8</td>
-        <td><a href="product.php?rec=edit&id=8">创意沙发</a></td>
-        <td align="center"><a href="product.php?cat_id=2">家居百货</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=8">编辑</a> | <a href="product.php?rec=del&id=8">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="7" /></td>
-        <td align="center">7</td>
-        <td><a href="product.php?rec=edit&id=7">MacBook Air笔记本电脑</a></td>
-        <td align="center"><a href="product.php?cat_id=1">电子数码</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=7">编辑</a> | <a href="product.php?rec=del&id=7">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="6" /></td>
-        <td align="center">6</td>
-        <td><a href="product.php?rec=edit&id=6">BlackBerry黑莓9780</a></td>
-        <td align="center"><a href="product.php?cat_id=4">智能手机</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=6">编辑</a> | <a href="product.php?rec=del&id=6">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="5" /></td>
-        <td align="center">5</td>
-        <td><a href="product.php?rec=edit&id=5">ThinkPad笔记本电脑</a></td>
-        <td align="center"><a href="product.php?cat_id=1">电子数码</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=5">编辑</a> | <a href="product.php?rec=del&id=5">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="4" /></td>
-        <td align="center">4</td>
-        <td><a href="product.php?rec=edit&id=4">Amazon Kindle电子书阅读器</a></td>
-        <td align="center"><a href="product.php?cat_id=5">平板电脑</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=4">编辑</a> | <a href="product.php?rec=del&id=4">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="3" /></td>
-        <td align="center">3</td>
-        <td><a href="product.php?rec=edit&id=3">魅族MX2智能手机</a></td>
-        <td align="center"><a href="product.php?cat_id=1">电子数码</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=3">编辑</a> | <a href="product.php?rec=del&id=3">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="2" /></td>
-        <td align="center">2</td>
-        <td><a href="product.php?rec=edit&id=2">苹果iPhone 5手机</a></td>
-        <td align="center"><a href="product.php?cat_id=4">智能手机</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=2">编辑</a> | <a href="product.php?rec=del&id=2">删除</a>
-                 </td>
-      </tr>
-            <tr>
-        <td align="center"><input type="checkbox" name="checkbox[]" value="1" /></td>
-        <td align="center">1</td>
-        <td><a href="product.php?rec=edit&id=1">iPad平板电脑</a></td>
-        <td align="center"><a href="product.php?cat_id=5">平板电脑</a></td>
-        <td align="center">2013-06-26</td>
-        <td align="center">
-                  <a href="product.php?rec=edit&id=1">编辑</a> | <a href="product.php?rec=del&id=1">删除</a>
-                 </td>
-      </tr>
+        @endforeach
+        {{--停--}}
+
           </table>
     <div class="action">
      <select name="action" onchange="douAction()">
@@ -266,7 +85,8 @@
     </form>
     </div>
     <div class="clear"></div>
-    <div class="pager">总计 15 个记录，共 1 页，当前第 1 页 | <a href="product.php?page=1">第一页</a> 上一页 下一页 <a href="product.php?page=1">最末页</a></div>               </div>
+    <div class="pager">总计 15 个记录，共 1 页，当前第 1 页 | <a href="goods_list?page=1">第一页</a> <a href="goods_list?page={{$up}}">上一页</a>
+        <a href="goods_list?page={{$down}}">下一页</a> <a href="goods_list?page={{$last}}">最末页</a></div>               </div>
  </div>
  <div class="clear"></div>
 <div id="dcFooter">

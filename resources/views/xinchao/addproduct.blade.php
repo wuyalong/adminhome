@@ -11,92 +11,46 @@
 </head>
 <body>
 <div id="dcWrap">
- <div id="dcHead">
- <div id="head">
-  <div class="logo"><a href="index.html"><img src="images/dclogo.gif" alt="logo"></a></div>
-  <div class="nav">
-   <ul>
-    <li class="M"><a href="JavaScript:void(0);" class="topAdd">新建</a>
-     <div class="drop mTopad"><a href="product.php?rec=add">商品</a> <a href="article.php?rec=add">文章</a> <a href="nav.php?rec=add">自定义导航</a> <a href="show.html">首页幻灯</a> <a href="page.php?rec=add">单页面</a> <a href="manager.php?rec=add">管理员</a> <a href="link.html"></a> </div>
-    </li>
-    <li><a href="../index.php" target="_blank">查看站点</a></li>
-    <li><a href="index.php?rec=clear_cache">清除缓存</a></li>
-    <li><a href="http://help.douco.com" target="_blank">帮助</a></li>
-    <li class="noRight"><a href="module.html">DouPHP+</a></li>
-   </ul>
-   <ul class="navRight">
-    <li class="M noLeft"><a href="JavaScript:void(0);">您好，admin</a>
-     <div class="drop mUser">
-      <a href="manager.php?rec=edit&id=1">编辑我的个人资料</a>
-      <a href="manager.php?rec=cloud_account">设置云账户</a>
-     </div>
-    </li>
-    <li class="noRight"><a href="login.php?rec=logout">退出</a></li>
-   </ul>
-  </div>
- </div>
-</div>
-<!-- dcHead 结束 --> <div id="dcLeft"><div id="menu">
- <ul class="top">
-  <li><a href="index.html"><i class="home"></i><em>管理首页</em></a></li>
- </ul>
- <ul>
-  <li><a href="system.html"><i class="system"></i><em>系统设置</em></a></li>
-  <li><a href="nav.html"><i class="nav"></i><em>自定义导航栏</em></a></li>
-  <li><a href="show.html"><i class="show"></i><em>首页幻灯广告</em></a></li>
-  <li><a href="page.html"><i class="page"></i><em>单页面管理</em></a></li>
- </ul>
-   <ul>
-  <li><a href="product_category.html"><i class="productCat"></i><em>商品分类</em></a></li>
-  <li class="cur"><a href="product.html"><i class="product"></i><em>商品列表</em></a></li>
- </ul>
-  <ul>
-  <li><a href="article_category.html"><i class="articleCat"></i><em>文章分类</em></a></li>
-  <li><a href="article.html"><i class="article"></i><em>文章列表</em></a></li>
- </ul>
-   <ul class="bot">
-  <li><a href="backup.html"><i class="backup"></i><em>数据备份</em></a></li>
-  <li><a href="mobile.html"><i class="mobile"></i><em>手机版</em></a></li>
-  <li><a href="theme.html"><i class="theme"></i><em>设置模板</em></a></li>
-  <li><a href="manager.html"><i class="manager"></i><em>网站管理员</em></a></li>
-  <li><a href="manager.php?rec=manager_log"><i class="managerLog"></i><em>操作记录</em></a></li>
- </ul>
-</div></div>
+    @include('public/common');
  <div id="dcMain">
    <!-- 当前位置 -->
 <div id="urHere">DouPHP 管理中心<b>></b><strong>添加商品</strong> </div>   <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
-            <h3><a href="product.html" class="actionBtn">商品列表</a>添加商品</h3>
-    <form action="product.php?rec=insert" method="post" enctype="multipart/form-data">
+            <h3><a href="goods_list" class="actionBtn">商品列表</a>添加商品</h3>
+    <form action="addproductok" method="post" enctype="multipart/form-data">
      <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
       <tr>
        <td width="90" align="right">商品名称</td>
        <td>
-        <input type="text" name="name" value="" size="80" class="inpMain" />
+        <input type="text" value="天堂柜" placeholder="不能为空" required oninvalid="setCustomValidity('请填写商品名称');" oninput="setCustomValidity('');" name="goods_name" value="" size="80" class="inpMain" />
        </td>
       </tr>
       <tr>
        <td align="right">商品分类</td>
        <td>
-        <select name="cat_id">
-         <option value="0">未分类</option>
-                           <option value="1"> 电子数码</option>
-                                    <option value="4">- 智能手机</option>
-                                    <option value="5">- 平板电脑</option>
-                                    <option value="2"> 家居百货</option>
-                                    <option value="3"> 母婴用品</option>
-                          </select>
+        <select name="sort_id">
+        @foreach($types as $t)
+                <option value="{{$t->sort_id}}">{{$t->sort_name}}</option>
+        @endforeach
+        </select>
        </td>
       </tr>
       <tr>
        <td align="right">商品价格</td>
        <td>
-        <input type="text" name="price" value="0" size="40" class="inpMain" />
+        <input type="text"  pattern="[0-9]{1,}" required oninvalid="setCustomValidity('请按照格式填写');" name="goods_price" value="9000" size="40" class="inpMain" />
        </td>
       </tr>
-            <tr>
+         <tr>
+             <td align="right">商品货号</td>
+             <td>
+                 <input type="text" required oninvalid="setCustomValidity('请填写商品货号');" name="goods_num" value="EC009007" size="40" class="inpMain" />
+             </td>
+         </tr>
+         <tr>
        <td align="right" valign="top">商品描述</td>
        <td>
         <!-- KindEditor -->
+
 			<link rel="stylesheet" href="js/kindeditor/themes/default/default.css" />
 			<link rel="stylesheet" href="js/kindeditor/plugins/code/prettify.css" />
 			<script charset="utf-8" src="js/kindeditor/kindeditor.js"></script>
@@ -105,9 +59,9 @@
         <script>
 					KindEditor.ready(function(K) {
 						var editor1 = K.create('textarea[name="content"]', {
-							cssPath : '../plugins/code/prettify.css',
-							uploadJson : '../php/upload_json.php',
-							fileManagerJson : '../php/file_manager_json.php',
+							cssPath : 'js/kindeditor/plugins/code/prettify.css',
+							uploadJson : 'js/kindeditor/php/upload_json.php',
+							fileManagerJson : 'js/kindeditor/php/file_manager_json.php',
 							allowFileManager : true,
 							afterCreate : function() {
 								var self = this;
@@ -125,32 +79,47 @@
 					});
 			</script>
         <!-- /KindEditor -->
-        <textarea id="content" name="content" style="width:780px;height:400px;" class="textArea"></textarea>
+        <textarea id="content" required name="goods_desc" style="width:500px;height:100px;" class="textArea"></textarea>
        </td>
       </tr>
       <tr>
-       <td align="right">缩略图</td>
+       <td align="right">商品图</td>
        <td>
-        <input type="file" name="image" size="38" class="inpFlie" />
+        <input type="file" required name="goods_img" size="38" class="inpFlie" />
         <img src="images/icon_no.png"></td>
       </tr>
       <tr>
-       <td align="right">关键字</td>
+       <td align="right">是否热卖</td>
        <td>
-        <input type="text" name="keywords" value="" size="50" class="inpMain" />
+           <select name="goods_hot">
+               <option value="1">是</option>
+               <option value="0"> 否</option>
+           </select>
        </td>
       </tr>
-      <tr>
-       <td align="right">简单描述</td>
-       <td>
-        <input type="text" name="description" value="" size="50" class="inpMain" />
-       </td>
-      </tr>
+         <tr>
+             <td align="right">是否精品</td>
+             <td>
+                 <select name="goods_good">
+                     <option value="1">是</option>
+                     <option value="0"> 否</option>
+                 </select>
+             </td>
+         </tr>
+         <tr>
+             <td align="right">是否新品</td>
+             <td>
+                 <select name="goods_new">
+                     <option value="1">是</option>
+                     <option value="0"> 否</option>
+                 </select>
+             </td>
+         </tr>
+
       <tr>
        <td></td>
        <td>
-        <input type="hidden" name="token" value="21307217" />
-        <input type="hidden" name="id" value="">
+
         <input name="submit" class="btn" type="submit" value="提交" />
        </td>
       </tr>
